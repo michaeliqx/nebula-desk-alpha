@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import { useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
 interface FixedSidebarProps {
   selectedNav: string;
@@ -49,105 +50,64 @@ export const FixedSidebar = ({
   ];
 
   return (
-    <TooltipProvider>
-      <div className={`sidebar-glass fixed left-0 top-0 h-full transition-all duration-300 z-40 ${
-        isCollapsed ? 'w-16' : 'w-64'
-      }`}>
-        {/* Header with Home and Toggle */}
-        <div className="flex items-center justify-between p-3 border-b border-border/20">
-          {/* Home Button */}
-          <Tooltip delayDuration={0}>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleHomeClick}
-                className="magic-icon text-foreground/80 hover:text-foreground hover:bg-primary/10"
-              >
-                {!isCollapsed && <span className="text-sm">LOGO</span>}
-              </Button>
-            </TooltipTrigger>
-            {isCollapsed && (
-              <TooltipContent side="right" className="glass-card text-foreground border-border/30">
-                返回首页
-              </TooltipContent>
-            )}
-          </Tooltip>
-
-          {/* Toggle Button */}
+    <div className={cn(
+      "fixed left-0 top-0 z-30 h-screen w-64 border-r border-violet-100 bg-white transition-all duration-300",
+      isCollapsed && "w-16"
+    )}>
+      <div className="flex h-full flex-col">
+        {/* Logo */}
+        <div className="flex h-16 items-center justify-between px-4 border-b border-violet-100">
+          {!isCollapsed && (
+            <h1 className="text-lg font-bold text-violet-800">算力云桌面</h1>
+          )}
           <Button
             variant="ghost"
             size="sm"
+            className="h-8 w-8 p-0 text-violet-600 hover:bg-violet-50"
             onClick={onToggleCollapse}
-            className="magic-icon text-foreground/80 hover:text-foreground hover:bg-primary/10"
           >
-            {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
           </Button>
         </div>
 
-        {/* 首页按钮 */}
-        <div className="px-3 py-2 border-b border-border/20">
-          <Tooltip delayDuration={0}>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size={isCollapsed ? "sm" : "default"}
-                onClick={() => onNavSelect("home")}
-                className={`magic-icon w-full ${isCollapsed ? 'px-2 justify-center' : 'justify-start'} transition-all duration-200 text-foreground/70 hover:text-foreground hover:bg-primary/10`}
-              >
-                <Home className={`w-5 h-5 ${isCollapsed ? '' : 'mr-3'} transition-all duration-200`} />
-                {!isCollapsed && (
-                  <span className="truncate text-sm font-medium">首页</span>
-                )}
-              </Button>
-            </TooltipTrigger>
-            {isCollapsed && (
-              <TooltipContent side="right" className="glass-card text-foreground border-border/30">
-                首页
-              </TooltipContent>
-            )}
-          </Tooltip>
-        </div>
-
-        {/* Navigation Items */}
-        <div className="px-3 py-2 space-y-2">
+        {/* Navigation */}
+        <nav className="flex-1 space-y-1 p-2">
           {navigationItems.map((item) => {
             const Icon = item.icon;
             const isSelected = selectedNav === item.id;
-            
+
             return (
-              <Tooltip key={item.id} delayDuration={0}>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size={isCollapsed ? "sm" : "default"}
-                    onClick={() => onNavSelect(item.id)}
-                    onMouseEnter={() => setHoveredItem(item.id)}
-                    onMouseLeave={() => setHoveredItem(null)}
-                    className={`magic-icon w-full ${isCollapsed ? 'px-2 justify-center' : 'justify-start'} transition-all duration-200 ${
-                      isSelected 
-                        ? 'bg-primary/20 text-foreground border border-primary/30' 
-                        : 'text-foreground/70 hover:text-foreground hover:bg-primary/10'
-                    } ${
-                      hoveredItem === item.id ? 'scale-105' : ''
-                    }`}
-                  >
-                    <Icon className={`w-5 h-5 ${isCollapsed ? '' : 'mr-3'} transition-all duration-200`} />
-                    {!isCollapsed && (
-                      <span className="truncate text-sm font-medium">{item.name}</span>
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                {isCollapsed && (
-                  <TooltipContent side="right" className="glass-card text-foreground border-border/30">
-                    {item.name}
-                  </TooltipContent>
+              <div key={item.id} className="relative">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={cn(
+                    "w-full justify-start gap-3 px-3 py-2 text-left font-medium transition-colors",
+                    isSelected
+                      ? "bg-violet-50 text-violet-800"
+                      : "text-gray-600 hover:bg-violet-50/50 hover:text-violet-700",
+                    isCollapsed && "justify-center"
+                  )}
+                  onClick={() => onNavSelect(item.id)}
+                >
+                  <Icon className={cn(
+                    "h-5 w-5",
+                    isSelected ? "text-violet-600" : "text-gray-500"
+                  )} />
+                  {!isCollapsed && <span>{item.name}</span>}
+                </Button>
+                {isSelected && !isCollapsed && (
+                  <div className="absolute right-0 top-0 h-full w-1 rounded-l-full bg-violet-600" />
                 )}
-              </Tooltip>
+              </div>
             );
           })}
+        </nav>
+
+        {/* User Section */}
+        <div className="border-t border-violet-100 p-4">
         </div>
       </div>
-    </TooltipProvider>
+    </div>
   );
 };

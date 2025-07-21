@@ -685,48 +685,38 @@ const Workspace = () => {
       case "diagnostics":
         return <Diagnostics />;
       case "monitor":
-        return <div className="space-y-6">
+        return <div className="space-y-6 p-6 bg-white rounded-lg">
             <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-2 text-white">资源监控</h2>
-              <p className="text-gray-400">实时监控系统资源使用情况</p>
+              <h2 className="text-3xl font-bold text-violet-800 mb-2">资源监控</h2>
+              <p className="text-gray-600 text-lg">实时监控系统资源使用情况</p>
             </div>
-            
-            {/* GPU实例列表 */}
-            <Card className="glass-card p-6 mb-6">
-              <h3 className="text-lg font-semibold mb-4 text-white">GPU 实例</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-white/5 rounded-lg border border-white/10">
-                  <div>
-                    <p className="font-medium text-white">NVIDIA A100</p>
-                    <p className="text-sm text-gray-400">80GB 显存</p>
-                  </div>
-                  <Badge className="bg-green-500/10 text-green-400 border-green-500/20">
-                    运行中
-                  </Badge>
+            <h3 className="text-lg font-semibold mb-4 text-violet-700">GPU 实例</h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center p-4 bg-violet-50 rounded-lg border border-violet-100">
+                <div>
+                  <p className="font-medium text-violet-800">NVIDIA A100</p>
+                  <p className="text-sm text-gray-600">80GB 显存</p>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-white/5 rounded-lg border border-white/10">
-                  <div>
-                    <p className="font-medium text-white">NVIDIA V100</p>
-                    <p className="text-sm text-gray-400">32GB 显存</p>
-                  </div>
-                  <Badge className="bg-gray-500/10 text-gray-400 border-gray-500/20">
-                    已停止
-                  </Badge>
-                </div>
+                <Badge className="bg-green-100 text-green-700 border-green-200">运行中</Badge>
               </div>
-            </Card>
-
-            {/* 资源监控图表 */}
+              <div className="flex justify-between items-center p-4 bg-violet-50 rounded-lg border border-violet-100">
+                <div>
+                  <p className="font-medium text-violet-800">NVIDIA V100</p>
+                  <p className="text-sm text-gray-600">32GB 显存</p>
+                </div>
+                <Badge className="bg-gray-100 text-gray-500 border-gray-200">已停止</Badge>
+              </div>
+            </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <ResourceMonitorChart data={resourceData} />
               <PerformanceChart data={performanceData} />
             </div>
           </div>;
       case "billing":
-        return <div className="space-y-6">
+        return <div className="space-y-6 p-6 bg-white rounded-lg">
             <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-2 text-white">订单管理</h2>
-              <p className="text-gray-400">查看您的订单和计费信息</p>
+              <h2 className="text-3xl font-bold text-violet-800 mb-2">订单管理</h2>
+              <p className="text-gray-600 text-lg">查看您的订单和计费信息</p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <BillingChart data={billingData} />
@@ -880,47 +870,21 @@ const Workspace = () => {
             </Card>
           </div>;
       case "docs":
-        return <div className="space-y-6">
+        return <div className="space-y-6 p-6 bg-white rounded-lg">
             <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-2 text-white">文档说明</h2>
-              <p className="text-gray-400">查看API文档和使用指南</p>
+              <h2 className="text-3xl font-bold text-violet-800 mb-2">文档说明</h2>
+              <p className="text-gray-600 text-lg">查阅平台使用文档和开发者指南</p>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="glass-card p-6">
-                <h3 className="text-lg font-semibold mb-4 text-white">快速开始</h3>
-                <div className="space-y-3">
-                  <div className="p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-                    <h4 className="font-medium text-white">🚀 平台介绍</h4>
-                    <p className="text-sm text-gray-400">了解算力云桌面的基本功能</p>
-                  </div>
-                  <div className="p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-                    <h4 className="font-medium text-white">⚡ 环境配置</h4>
-                    <p className="text-sm text-gray-400">设置开发环境和依赖</p>
-                  </div>
-                  <div className="p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-                    <h4 className="font-medium text-white">🔧 工具使用</h4>
-                    <p className="text-sm text-gray-400">常用开发工具的使用方法</p>
-                  </div>
-                </div>
-              </Card>
-              <Card className="glass-card p-6">
-                <h3 className="text-lg font-semibold mb-4 text-white">API 参考</h3>
-                <div className="space-y-3">
-                  <div className="p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-                    <h4 className="font-medium text-white">📡 REST API</h4>
-                    <p className="text-sm text-gray-400">完整的REST API文档</p>
-                  </div>
-                  <div className="p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-                    <h4 className="font-medium text-white">🔌 SDK</h4>
-                    <p className="text-sm text-gray-400">各语言SDK使用指南</p>
-                  </div>
-                  <div className="p-3 bg-white/5 rounded-lg border border-white/10 hover:bg-white/10 transition-colors cursor-pointer">
-                    <h4 className="font-medium text-white">📝 示例代码</h4>
-                    <p className="text-sm text-gray-400">常见场景的代码示例</p>
-                  </div>
-                </div>
-              </Card>
-            </div>
+            <Card className="bg-violet-50 border border-violet-100 p-6 mb-4">
+              <h3 className="text-xl font-semibold text-violet-700 mb-2">快速入门</h3>
+              <p className="text-gray-700 mb-2">欢迎使用算力云桌面！您可以在这里查阅平台的基础操作、常见问题和开发者API文档。</p>
+              <Button className="bg-violet-600 hover:bg-violet-700 text-white font-medium px-6 mt-2">查看文档</Button>
+            </Card>
+            <Card className="bg-violet-50 border border-violet-100 p-6">
+              <h3 className="text-xl font-semibold text-violet-700 mb-2">开发者文档</h3>
+              <p className="text-gray-700 mb-2">集成API、SDK、Webhook等高级功能，助力自动化与二次开发。</p>
+              <Button className="bg-violet-600 hover:bg-violet-700 text-white font-medium px-6 mt-2">API参考</Button>
+            </Card>
           </div>;
       case "personal":
         return <div className="space-y-6">
@@ -1012,10 +976,10 @@ const Workspace = () => {
             </div>
           </div>;
       case "billing":
-        return <div className="space-y-6">
+        return <div className="space-y-6 p-6 bg-white rounded-lg">
             <div className="mb-6">
-              <h2 className="text-2xl font-bold mb-2 text-white">计费中心</h2>
-              <p className="text-gray-400">管理账单、费用和支付方式</p>
+              <h2 className="text-3xl font-bold text-violet-800 mb-2">计费中心</h2>
+              <p className="text-gray-600 text-lg">管理账单、费用和支付方式</p>
             </div>
             
             {/* 费用概览 */}
@@ -1104,81 +1068,18 @@ const Workspace = () => {
     }
   };
   return <WorkspaceModeProvider>
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black relative flex">
+      <div className="min-h-screen bg-white relative flex">
         {/* 导航栏 - 根据模式选择 */}
         {useFixedSidebar ? <FixedSidebar selectedNav={selectedNav} onNavSelect={setSelectedNav} isCollapsed={sidebarCollapsed} onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)} /> : <FloatingNavigation selectedNav={selectedNav} onNavSelect={setSelectedNav} onNewWorkspace={handleNewWorkspace} onSwitchWorkspace={handleSwitchWorkspace} onSaveTemplate={handleSaveTemplate} onDeleteTemplate={handleDeleteTemplate} />}
       
         {/* 主内容区域 - 向右移动并居中分布 */}
         <div className={`flex-1 flex flex-col transition-all duration-300 ${useFixedSidebar ? sidebarCollapsed ? 'ml-16' : 'ml-64' : 'ml-20'} ${showAINavigator ? aiNavigatorCollapsed ? 'mr-16' : 'mr-96' : 'mr-0'}`}>
-            {/* 顶部导航栏 - 只保留工作空间名称和切换、运行状态 */}
-            <div className="backdrop-blur-xl border-b border-white/10 px-6 py-4 bg-gray-800">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  {isEditingName ? <div className="flex items-center gap-2">
-                      <Input value={editingName} onChange={e => setEditingName(e.target.value)} className="bg-white/10 border-white/20 text-white text-xl font-bold px-3 py-1 h-auto" autoFocus onKeyPress={e => e.key === 'Enter' && handleSaveWorkspaceName()} />
-                      <Button onClick={handleSaveWorkspaceName} size="sm" className="bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/30">
-                        <Check className="h-4 w-4" />
-                      </Button>
-                      <Button onClick={handleCancelEditName} size="sm" variant="outline" className="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/30">
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div> : <div className="flex items-center gap-2">
-                      <h1 className="text-xl font-bold text-white">
-                        {currentWorkspace?.name || "工作空间"}
-                      </h1>
-                      <Button onClick={() => setIsEditingName(true)} size="sm" variant="ghost" className="text-white/60 hover:text-white hover:bg-white/10">
-                        <Edit3 className="h-4 w-4" />
-                      </Button>
-                    </div>}
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  {/* 用户图标 */}
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-                    <User className="w-4 h-4 text-white" />
-                  </div>
-                  
-                {/* AI导航栏切换按钮 */}
-                <Button 
-                  onClick={() => setShowAINavigator(!showAINavigator)} 
-                  variant="outline" 
-                  size="sm" 
-                  className="bg-pink-500/10 border-pink-500/30 text-pink-300 hover:bg-pink-500/20"
-                >
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  {showAINavigator ? '隐藏AI' : '显示AI'}
-                </Button>
-                
-                {/* 导航模式切换按钮 */}
-                <Button onClick={() => setUseFixedSidebar(!useFixedSidebar)} variant="outline" size="sm" className="bg-blue-500/10 border-blue-500/30 text-blue-300 hover:bg-blue-500/20">
-                  <Menu className="h-4 w-4 mr-2" />
-                  {useFixedSidebar ? '悬浮模式' : '固定模式'}
-                </Button>
-                
-                {/* 切换工作空间按钮 */}
-                <Button onClick={handleSwitchWorkspace} variant="outline" size="sm" className="bg-purple-500/10 border-purple-500/30 text-purple-300 hover:bg-purple-500/20">
-                  <ArrowLeftRight className="h-4 w-4 mr-2" />
-                  切换空间
-                </Button>
-                
-                {/* 工作空间运行状态 */}
-                <Badge className="bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
-                  <div className="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></div>
-                  运行中
-                </Badge>
-                </div>
-              </div>
-            </div>
-
-            {/* Content Area */}
-            <div className="flex-1 p-6 overflow-auto bg-purple-900">
+            {/* 顶部导航栏 */}
+            <div className="flex-1 p-6 overflow-auto bg-violet-50">
             <div className="h-full flex gap-6 mx-0 my-0 px-0 py-0">
               <div className="flex-1">
                 {renderContent()}
               </div>
-              
-              {/* 右侧区域 - 创建过程可视化或AI聊天 */}
-              
             </div>
           </div>
         </div>
@@ -1192,7 +1093,7 @@ const Workspace = () => {
           onClose={() => setShowAINavigator(false)}
         />
 
-        {/* 悬浮AI对话框 - 只在AI导航栏不显示时显示 */}
+        {/* 悬浮AI对话框 */}
         {!showAINavigator && <FloatingAIChat />}
       </div>
     </WorkspaceModeProvider>;

@@ -76,6 +76,27 @@ export const Diagnostics = () => {
     uploadSpeed: "45.7 Mbps",
     ping: "12ms"
   };
+
+  const diagnosticResults = [{
+    name: "系统检查",
+    status: "success",
+    timestamp: "2分钟前",
+    message: "所有系统服务运行正常",
+    details: "CPU: 23% | 内存: 45% | 磁盘: 78%"
+  }, {
+    name: "网络连接",
+    status: "warning",
+    timestamp: "5分钟前",
+    message: "检测到网络延迟波动",
+    details: "延迟: 45ms | 下载: 125.3 Mbps | 上传: 45.7 Mbps"
+  }, {
+    name: "存储服务",
+    status: "error",
+    timestamp: "10分钟前",
+    message: "S3存储连接超时",
+    details: "错误代码: TIMEOUT_ERROR\n重试次数: 3"
+  }];
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "passed":
@@ -112,110 +133,59 @@ export const Diagnostics = () => {
         return <Badge className="bg-gray-500/20 text-gray-400 border-gray-500/30 text-xs">UNKNOWN</Badge>;
     }
   };
-  return <div className="space-y-6">
+  return <div className="space-y-6 p-6 bg-white rounded-lg">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">诊断</h1>
-          <p className="text-gray-400">Monitor system health and troubleshoot connectivity issues</p>
+          <h1 className="text-3xl font-bold text-violet-800 mb-2">诊断</h1>
+          <p className="text-gray-600 text-lg">监控系统健康状态和排查连接问题</p>
         </div>
-        <Button className="bg-green-600 hover:bg-green-700 text-white">
-          ▶ Run Diagnostics
+        <Button className="bg-violet-600 hover:bg-violet-700 text-white font-medium px-6">
+          ▶ 运行诊断
         </Button>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => <Card key={index} className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+        {stats.map((stat, index) => <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-200 rounded-xl p-6 border border-violet-100">
             <div className="flex items-center gap-4">
-              <div className={`w-12 h-12 ${stat.bgColor} rounded-xl flex items-center justify-center`}>
-                <stat.icon className={`w-6 h-6 ${stat.color}`} />
+              <div className={`w-12 h-12 bg-violet-50 rounded-xl flex items-center justify-center`}>
+                <stat.icon className={`w-6 h-6 text-violet-600`} />
               </div>
               <div>
-                <h3 className="font-medium text-gray-300 text-sm">{stat.label}</h3>
-                <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                <h3 className="font-medium text-gray-600 text-sm mb-1">{stat.label}</h3>
+                <p className={`text-2xl font-bold text-violet-800`}>{stat.value}</p>
               </div>
             </div>
           </Card>)}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Connectivity Tests */}
-        <Card className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <CheckCircle className="w-6 h-6 text-blue-400" />
-            <h2 className="text-xl font-semibold text-white">Connectivity Tests</h2>
-          </div>
-          <p className="text-gray-400 text-sm mb-6">Automated tests for system connectivity and performance</p>
-
-          <div className="space-y-4">
-            {connectivityTests.map(test => <Card key={test.id} className="bg-white/5 backdrop-blur-xl rounded-xl p-5 border border-white/10">
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex items-center gap-3">
-                    {getStatusIcon(test.status)}
-                    <div>
-                      <h4 className="text-white font-semibold text-sm">{test.name}</h4>
-                      <p className="text-gray-400 text-xs">{test.description}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    {getStatusBadge(test.status)}
-                    <div className="text-right">
-                      <div className="text-xs text-gray-400">{test.duration}</div>
-                    </div>
-                  </div>
+      {/* 诊断结果列表 */}
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold text-violet-800 mb-4">诊断历史</h2>
+        <div className="space-y-4">
+          {diagnosticResults.map((result, index) => (
+            <Card key={index} className="bg-white p-4 border border-violet-100">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className={`w-2 h-2 rounded-full ${
+                    result.status === 'success' ? 'bg-green-500' : 
+                    result.status === 'warning' ? 'bg-yellow-500' : 
+                    'bg-red-500'
+                  }`} />
+                  <span className="font-medium text-violet-800">{result.name}</span>
                 </div>
-                <p className="text-white text-sm">{test.detail}</p>
-              </Card>)}
-          </div>
-        </Card>
-
-        {/* System Metrics */}
-        <Card className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
-          <div className="flex items-center gap-3 mb-6">
-            <Zap className="w-6 h-6 text-purple-400" />
-            <h2 className="text-xl font-semibold text-white">System Metrics</h2>
-          </div>
-          <p className="text-gray-400 text-sm mb-6">Real-time system performance monitoring</p>
-
-          <div className="space-y-6">
-            {systemMetrics.map((metric, index) => <div key={index}>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-white font-medium">{metric.name}</span>
-                  <span className="text-white font-bold">{metric.value}%</span>
-                </div>
-                <Progress value={metric.value} className="h-2" />
-              </div>)}
-
-            <div className="border-t border-white/10 pt-6">
-              <h4 className="text-white font-medium mb-1">Network I/O</h4>
-              <p className="text-green-400 font-bold text-lg">12.5MB/s</p>
-            </div>
-
-            {/* Quick Network Test */}
-            <Card className="bg-purple-500/10 border border-purple-300/20 p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <Wifi className="w-5 h-5 text-purple-400" />
-                <h4 className="text-white font-medium">Quick Network Test</h4>
+                <span className="text-sm text-gray-500">{result.timestamp}</span>
               </div>
-              
-              <div className="grid grid-cols-3 gap-4 text-sm">
-                <div>
-                  <div className="text-gray-400 mb-1">Download Speed:</div>
-                  <p className="text-white font-semibold">{networkTest.downloadSpeed}</p>
+              <p className="mt-2 text-gray-600">{result.message}</p>
+              {result.details && (
+                <div className="mt-2 p-3 bg-violet-50 rounded-md">
+                  <pre className="text-sm text-violet-700 whitespace-pre-wrap">{result.details}</pre>
                 </div>
-                <div>
-                  <div className="text-gray-400 mb-1">Upload Speed:</div>
-                  <p className="text-white font-semibold">{networkTest.uploadSpeed}</p>
-                </div>
-                <div>
-                  <div className="text-gray-400 mb-1">Ping:</div>
-                  <p className="text-white font-semibold">{networkTest.ping}</p>
-                </div>
-              </div>
+              )}
             </Card>
-          </div>
-        </Card>
+          ))}
+        </div>
       </div>
     </div>;
 };

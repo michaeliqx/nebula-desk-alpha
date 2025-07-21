@@ -26,6 +26,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 interface FloatingNavigationProps {
   selectedNav: string;
@@ -143,102 +145,77 @@ export const FloatingNavigation = ({
           </Button>
         </div>
 
-        <div className={`
-          flex transition-all duration-500 ease-in-out
-          ${isCollapsed ? 'flex-col gap-3 p-4' : 'flex-row flex-wrap gap-4 p-6 w-96'}
-          bg-purple-500/20 backdrop-blur-xl rounded-2xl border border-purple-300/30 shadow-lg shadow-purple-500/20
-        `}>
-          {navigationItems.map((item) => (
-            <div key={item.id} className={`
-              ${isCollapsed ? '' : 'flex flex-col items-center'}
-            `}>
-              {item.hasDropdown ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <div>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className={`
-                              ${isCollapsed ? 'w-12 h-12' : hoveredItem === item.id ? 'w-16 h-16' : 'w-12 h-12'}
-                              rounded-xl transition-all duration-300 border-2
-                              ${selectedNav === item.id 
-                                ? 'bg-purple-400/30 border-purple-400/60 text-purple-200 scale-110' 
-                                : 'bg-purple-500/10 border-purple-300/20 text-purple-200 hover:bg-purple-500/20 hover:border-purple-300/40 hover:scale-110'
-                              }
-                              hover:shadow-lg hover:shadow-purple-500/30
-                            `}
-                            onMouseEnter={() => setHoveredItem(item.id)}
-                            onMouseLeave={() => setHoveredItem(null)}
-                          >
-                            <item.icon className={`${hoveredItem === item.id && !isCollapsed ? 'w-6 h-6' : 'w-5 h-5'} transition-all duration-300`} />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent side={isCollapsed ? "right" : "top"} className="ml-2">
-                          <p>{item.name}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </div>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent 
-                    side="right" 
-                    className="ml-2 bg-purple-900/90 backdrop-blur-xl border border-purple-300/30"
-                  >
-                    {item.items?.map((subItem, index) => (
-                      <div key={subItem.id}>
-                        <DropdownMenuItem
-                          onClick={() => handleItemClick(subItem)}
-                          className="text-purple-200 hover:bg-purple-500/20 cursor-pointer flex items-center gap-2"
-                        >
-                          <subItem.icon className="w-4 h-4" />
-                          {subItem.name}
-                        </DropdownMenuItem>
-                        {index < item.items!.length - 1 && <DropdownMenuSeparator className="bg-purple-300/20" />}
-                      </div>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <div className="flex flex-col items-center">
-                  <Tooltip>
-                    <TooltipTrigger asChild>
+        <div className={cn(
+          "fixed left-4 top-4 z-30 flex flex-col gap-2 transition-all duration-300",
+          isCollapsed ? "w-16" : "w-64"
+        )}>
+          <Card className="bg-white border border-violet-100 shadow-lg p-2">
+            {navigationItems.map((item) => {
+              const Icon = item.icon;
+              const isSelected = selectedNav === item.id;
+
+              if (item.hasDropdown) {
+                return (
+                  <DropdownMenu key={item.id}>
+                    <DropdownMenuTrigger asChild>
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleItemClick(item)}
-                        className={`
-                          ${isCollapsed ? 'w-12 h-12' : hoveredItem === item.id ? 'w-16 h-16' : 'w-12 h-12'}
-                          rounded-xl transition-all duration-300 border-2
-                          ${selectedNav === item.id 
-                            ? 'bg-purple-400/30 border-purple-400/60 text-purple-200 scale-110' 
-                            : item.variant === 'destructive'
-                              ? 'bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20 hover:border-red-500/40 hover:scale-110'
-                              : 'bg-purple-500/10 border-purple-300/20 text-purple-200 hover:bg-purple-500/20 hover:border-purple-300/40 hover:scale-110'
-                          }
-                          hover:shadow-lg 
-                          ${item.variant === 'destructive' ? 'hover:shadow-red-500/20' : 'hover:shadow-purple-500/30'}
-                        `}
-                        onMouseEnter={() => setHoveredItem(item.id)}
-                        onMouseLeave={() => setHoveredItem(null)}
+                        className={cn(
+                          "w-full justify-start gap-3 px-3 py-2 text-left font-medium transition-colors",
+                          isSelected
+                            ? "bg-violet-50 text-violet-800"
+                            : "text-gray-600 hover:bg-violet-50/50 hover:text-violet-700",
+                          isCollapsed && "justify-center"
+                        )}
                       >
-                        <item.icon className={`${hoveredItem === item.id && !isCollapsed ? 'w-6 h-6' : 'w-5 h-5'} transition-all duration-300`} />
+                        <Icon className={cn(
+                          "h-5 w-5",
+                          isSelected ? "text-violet-600" : "text-gray-500"
+                        )} />
+                        {!isCollapsed && <span>{item.name}</span>}
                       </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side={isCollapsed ? "right" : "top"} className="ml-2">
-                      <p>{item.name}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                  {!isCollapsed && (
-                    <span className="text-xs text-purple-200 mt-1 text-center leading-tight">
-                      {item.name}
-                    </span>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-56">
+                      {item.items?.map((subItem) => (
+                        <DropdownMenuItem
+                          key={subItem.id}
+                          onClick={subItem.action}
+                          className="gap-2 text-gray-600 hover:text-violet-700"
+                        >
+                          <subItem.icon className="h-4 w-4" />
+                          <span>{subItem.name}</span>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                );
+              }
+
+              return (
+                <Button
+                  key={item.id}
+                  variant="ghost"
+                  size="sm"
+                  className={cn(
+                    "w-full justify-start gap-3 px-3 py-2 text-left font-medium transition-colors",
+                    isSelected
+                      ? "bg-violet-50 text-violet-800"
+                      : "text-gray-600 hover:bg-violet-50/50 hover:text-violet-700",
+                    isCollapsed && "justify-center",
+                    item.variant === "destructive" && "text-red-600 hover:text-red-700 hover:bg-red-50"
                   )}
-                </div>
-              )}
-            </div>
-          ))}
+                  onClick={() => handleItemClick(item)}
+                >
+                  <Icon className={cn(
+                    "h-5 w-5",
+                    isSelected ? "text-violet-600" : item.variant === "destructive" ? "text-red-500" : "text-gray-500"
+                  )} />
+                  {!isCollapsed && <span>{item.name}</span>}
+                </Button>
+              );
+            })}
+          </Card>
         </div>
       </div>
     </TooltipProvider>

@@ -348,12 +348,10 @@ const ProjectCreation = () => {
     });
     navigate("/workspace");
   };
-  return <div className="min-h-screen relative overflow-hidden">
-      {/* 星空渐变背景 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500"></div>
-      <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/50 via-purple-900/30 to-pink-900/50"></div>
-      
-      {/* 星空效果装饰 */}
+  return <div className="min-h-screen relative overflow-hidden bg-violet-50">
+      {/* 浅色背景装饰 */}
+      <div className="absolute inset-0 bg-violet-50"></div>
+      {/* 星空和光晕装饰可保留 */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full animate-pulse opacity-80"></div>
         <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-white rounded-full animate-pulse opacity-60" style={{
@@ -383,16 +381,18 @@ const ProjectCreation = () => {
     }}></div>
       
       {/* Header */}
-      <header className="border-b border-white/20 bg-white/5 backdrop-blur-lg relative z-10">
+      <header className="border-b border-violet-100 bg-white/80 backdrop-blur-lg relative z-10">
         <div className="w-full flex items-center justify-between px-6 py-[10px]">
           <div className="flex items-center gap-4">
-            <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-              <div className="w-4 h-4 bg-white rounded"></div>
+            <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center">
+              <div className="w-4 h-4 bg-violet-500 rounded"></div>
             </div>
-            <span className="font-semibold text-2xl text-slate-50">Alaya NeW Cross</span>
+            <span className="font-semibold text-2xl text-violet-800">Alaya NeW Cross</span>
           </div>
           <div className="ml-auto">
-            <UserMenu />
+            <div className="text-violet-600 hover:text-violet-800">
+              <UserMenu />
+            </div>
           </div>
         </div>
       </header>
@@ -409,13 +409,13 @@ const ProjectCreation = () => {
           {/* AI Chat Header */}
           <div className="text-center mb-12 animate-fade-in">
             <div className="flex items-center justify-center gap-4 mb-6 mx-0 my-0 py-0 px-0 rounded-md">
-              <Sparkles className="w-12 h-12 text-white animate-pulse" />
-              <h1 className="text-6xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
+              <Sparkles className="w-12 h-12 text-violet-600 animate-pulse" />
+              <h1 className="text-6xl font-bold bg-gradient-to-r from-violet-700 via-violet-500 to-violet-400 bg-clip-text text-transparent">
                 AI 智能工作空间助手
               </h1>
-              <Sparkles className="w-12 h-12 text-white animate-pulse" />
+              <Sparkles className="w-12 h-12 text-violet-600 animate-pulse" />
             </div>
-            <p className="text-xl text-white/90 font-medium">告诉我您的需求，我将为您量身定制完美的工作空间</p>
+            <p className="text-xl text-violet-800 font-medium">告诉我您的需求，我将为您量身定制完美的工作空间</p>
           </div>
 
           {/* AI 聊天窗口 - 缩小 */}
@@ -467,66 +467,63 @@ const ProjectCreation = () => {
             </div>
           </Card>
         </div>
-
-        {/* 传统创建方式 - 缩小占比，更低调 */}
-        <div className="max-w-2xl mx-auto opacity-70 hover:opacity-90 transition-opacity duration-300">
+        {/* 模板创建和空白创建区域（恢复原有位置，仅调整颜色） */}
+        <div className="max-w-2xl mx-auto opacity-100 transition-opacity duration-300">
           <div className="text-center mb-4">
-            <p className="text-xs text-white/60">或者选择传统创建方式</p>
+            <p className="text-xs text-violet-600">或者选择传统创建方式</p>
           </div>
-          
           <div className="grid grid-cols-2 gap-3">
-            {/* 简化的模板创建 */}
-            <Card className="p-3 cursor-pointer hover:scale-105 transition-all duration-300 bg-white/5 border-white/20">
+            {/* 模板创建 */}
+            <Card className="p-3 cursor-pointer hover:scale-105 transition-all duration-300 bg-white border border-violet-100">
               <div className="flex items-center gap-2 mb-1">
-                <div className="w-6 h-6 bg-blue-400/30 rounded-lg flex items-center justify-center">
-                  <Rocket className="w-3 h-3 text-blue-300" />
+                <div className="w-6 h-6 bg-violet-100 rounded-lg flex items-center justify-center">
+                  <Rocket className="w-3 h-3 text-violet-500" />
                 </div>
-                <h3 className="text-sm font-medium text-white">模板创建</h3>
+                <h3 className="text-sm font-medium text-violet-800">模板创建</h3>
               </div>
-              <p className="text-xs text-white/60 mb-2">从预设模板快速创建</p>
+              <p className="text-xs text-gray-700 mb-2">从预设模板快速创建</p>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="mt-3 w-full">
+                  <Button variant="outline" size="sm" className="mt-3 w-full text-violet-700 border-violet-200">
                     选择模板
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-card/95 backdrop-blur-lg border-border/50">
+                <DropdownMenuContent className="w-56 bg-white border-violet-100">
                   {templates.map(template => <DropdownMenuItem key={template.id} onClick={() => {
-                  createWorkspace({
-                    name: `${template.name} 工作空间`,
-                    description: template.description,
-                    type: "template",
-                    components: []
-                  });
-                  navigate("/workspace");
-                }}>
-                      <div>
-                        <div className="font-medium">{template.name}</div>
-                        <div className="text-xs text-muted-foreground">{template.description}</div>
-                      </div>
-                    </DropdownMenuItem>)}
+                    createWorkspace({
+                      name: `${template.name} 工作空间`,
+                      description: template.description,
+                      type: "template",
+                      components: []
+                    });
+                    navigate("/workspace");
+                  }}>
+                    <div>
+                      <div className="font-medium text-violet-800">{template.name}</div>
+                      <div className="text-xs text-gray-600">{template.description}</div>
+                    </div>
+                  </DropdownMenuItem>)}
                 </DropdownMenuContent>
               </DropdownMenu>
             </Card>
-
-            {/* 简化的空白创建 */}
-            <Card className="p-3 cursor-pointer hover:scale-105 transition-all duration-300 bg-white/5 border-white/20" onClick={() => {
-            createWorkspace({
-              name: "空白工作空间",
-              description: "从零开始创建的空白工作空间",
-              type: "blank",
-              components: []
-            });
-            navigate("/workspace");
-          }}>
+            {/* 空白创建 */}
+            <Card className="p-3 cursor-pointer hover:scale-105 transition-all duration-300 bg-white border border-violet-100" onClick={() => {
+              createWorkspace({
+                name: "空白工作空间",
+                description: "从零开始创建的空白工作空间",
+                type: "blank",
+                components: []
+              });
+              navigate("/workspace");
+            }}>
               <div className="flex items-center gap-2 mb-1">
-                <div className="w-6 h-6 bg-purple-400/30 rounded-lg flex items-center justify-center">
-                  <FileText className="w-3 h-3 text-purple-300" />
+                <div className="w-6 h-6 bg-violet-100 rounded-lg flex items-center justify-center">
+                  <FileText className="w-3 h-3 text-violet-500" />
                 </div>
-                <h3 className="text-sm font-medium text-white">空白创建</h3>
+                <h3 className="text-sm font-medium text-violet-800">空白创建</h3>
               </div>
-              <p className="text-xs text-white/60 mb-2">从零开始创建全新项目</p>
-              <Button variant="outline" size="sm" className="w-full border-white/20 mx-0 my-[12px] text-sm text-neutral-50 bg-slate-950 hover:bg-slate-800">
+              <p className="text-xs text-gray-700 mb-2">从零开始创建全新项目</p>
+              <Button variant="outline" size="sm" className="w-full border-violet-200 text-violet-700 mx-0 my-[12px] text-sm bg-white hover:bg-violet-50">
                 立即创建
               </Button>
             </Card>

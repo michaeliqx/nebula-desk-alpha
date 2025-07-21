@@ -30,29 +30,28 @@ const Login = () => {
       }}
     >
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-white/80 backdrop-blur-sm"></div>
       
       {/* Background decorative elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-10">
-        <div className="absolute top-20 left-20 w-32 h-32 bg-primary/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-32 right-32 w-40 h-40 bg-accent/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-primary/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-20 left-20 w-32 h-32 bg-violet-400/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-32 right-32 w-40 h-40 bg-violet-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-violet-300/10 rounded-full blur-2xl animate-float" style={{ animationDelay: '4s' }}></div>
       </div>
 
-      <div className="w-full max-w-md relative z-20">
-        {/* Logo and title */}
-        <div className="text-center mb-8 animate-fade-in">
-          <div className="w-16 h-16 bg-primary/20 rounded-2xl mx-auto mb-4 flex items-center justify-center glow">
-            <div className="w-8 h-8 bg-primary rounded-lg animate-glow"></div>
-          </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            算力云桌面
-          </h1>
-          <p className="text-muted-foreground mt-2">强大的云端计算体验</p>
+      {/* Logo and title */}
+      <div className="text-center mb-8 animate-fade-in">
+        <div className="w-16 h-16 bg-violet-400/20 rounded-2xl mx-auto mb-4 flex items-center justify-center glow">
+          <div className="w-8 h-8 bg-violet-500 rounded-lg animate-glow"></div>
         </div>
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-500 to-violet-400 bg-clip-text text-transparent">
+          算力云桌面
+        </h1>
+        <p className="text-gray-600 mt-2">强大的云端计算体验</p>
+      </div>
 
-        {/* Login form */}
-        <Card className="glass-card p-8 animate-slide-in">
+      {/* Login form */}
+      <Card className="glass-card p-8 animate-slide-in bg-white/70 backdrop-blur-xl border border-violet-200">
           <div className="space-y-6">
             <div className="flex gap-4">
               <Button 

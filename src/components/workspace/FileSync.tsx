@@ -124,26 +124,28 @@ export const FileSync = () => {
         return <AlertCircle className="w-4 h-4 text-gray-400" />;
     }
   };
-  return <div className="space-y-6">
+  return <div className="space-y-6 p-6 bg-white rounded-lg">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">文件</h1>
-          <p className="text-gray-400">本地存储与云端存储文件同步操作</p>
+          <h1 className="text-3xl font-bold text-violet-800 mb-2">文件同步</h1>
+          <p className="text-gray-600 text-lg">本地存储与云端存储文件同步操作</p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white">+ 添加同步任务</Button>
+        <Button className="bg-violet-600 hover:bg-violet-700 text-white font-medium px-6">
+          + 添加同步任务
+        </Button>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => <Card key={index} className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+        {stats.map((stat, index) => <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-200 rounded-xl p-6 border border-violet-100">
             <div className="flex items-center gap-4">
-              <div className={`w-12 h-12 ${stat.bgColor} rounded-xl flex items-center justify-center`}>
-                <stat.icon className={`w-6 h-6 ${stat.color}`} />
+              <div className={`w-12 h-12 bg-violet-50 rounded-xl flex items-center justify-center`}>
+                <stat.icon className={`w-6 h-6 text-violet-600`} />
               </div>
               <div>
-                <h3 className="font-medium text-gray-300 text-sm">{stat.label}</h3>
-                <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                <h3 className="font-medium text-gray-600 text-sm mb-1">{stat.label}</h3>
+                <p className={`text-2xl font-bold text-violet-800`}>{stat.value}</p>
               </div>
             </div>
           </Card>)}
@@ -151,28 +153,32 @@ export const FileSync = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Quick Upload */}
-        <Card className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
+        <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-200 rounded-xl p-6 border border-violet-100">
           <div className="flex items-center gap-3 mb-6">
-            <Upload className="w-6 h-6 text-blue-400" />
-            <h2 className="text-xl font-semibold text-white">快速上传</h2>
+            <Upload className="w-6 h-6 text-violet-600" />
+            <h2 className="text-xl font-semibold text-violet-800">快速上传</h2>
           </div>
-          <p className="text-gray-400 text-sm mb-4">将文件拖拽到这里或点击进行浏览</p>
+          <p className="text-gray-600 text-base mb-4">将文件拖拽到这里或点击进行浏览</p>
           
           {/* Upload Area */}
-          <div className="border-2 border-dashed border-purple-300/30 rounded-xl p-8 text-center mb-6 hover:border-purple-300/50 transition-colors cursor-pointer">
-            <FolderIcon className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-            <p className="text-purple-300 text-lg font-medium mb-2">在此处拖拽文件</p>
-            <p className="text-gray-400 text-sm mb-4">或点击进行浏览</p>
-            <Button className="bg-purple-600 hover:bg-purple-700 text-white">浏览文件</Button>
+          <div className="border-2 border-dashed border-violet-200 rounded-xl p-8 text-center mb-6 hover:border-violet-400 transition-colors cursor-pointer bg-violet-50/50">
+            <FolderIcon className="w-12 h-12 text-violet-500 mx-auto mb-4" />
+            <p className="text-violet-700 text-lg font-medium mb-2">在此处拖拽文件</p>
+            <p className="text-gray-600 text-base mb-4">或点击进行浏览</p>
+            <Button className="bg-violet-600 hover:bg-violet-700 text-white font-medium px-6">
+              浏览文件
+            </Button>
           </div>
 
           {/* Storage Options */}
           <div>
-            <h3 className="text-white font-medium mb-3">储存选项</h3>
-            <div className="space-y-2">
-              {storageOptions.map(option => <div key={option.id} className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-colors ${selectedStorage === option.id ? 'bg-purple-500/20 border border-purple-400/30' : 'bg-white/5 border border-white/10 hover:bg-white/10'}`} onClick={() => setSelectedStorage(option.id)}>
-                  <div className={`w-3 h-3 rounded-full ${selectedStorage === option.id ? 'bg-purple-400' : 'bg-gray-400'}`}></div>
-                  <span className="text-white text-sm">{option.name}</span>
+            <h3 className="text-lg font-semibold text-violet-800 mb-3">储存选项</h3>
+            <div className="space-y-3">
+              {storageOptions.map(option => <div key={option.id} className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all duration-200 ${selectedStorage === option.id ? 'bg-violet-50 border border-violet-200' : 'bg-white border border-violet-100 hover:bg-violet-50/50'}`} onClick={() => setSelectedStorage(option.id)}>
+                  <div className={`w-4 h-4 rounded-full border-2 ${selectedStorage === option.id ? 'border-violet-600 bg-violet-600' : 'border-violet-300'}`}>
+                    {selectedStorage === option.id && <div className="w-2 h-2 bg-white rounded-full m-0.5" />}
+                  </div>
+                  <span className="text-violet-800 font-medium">{option.name}</span>
                 </div>)}
             </div>
           </div>

@@ -31,182 +31,96 @@ export const WorkspaceManagement = ({
     if (usage < 80) return "text-yellow-400";
     return "text-red-400";
   };
-  return <div className="p-6 space-y-6 mx-0 px-0 py-0 my-0">
+  return <div className="p-6 space-y-6 bg-white rounded-lg">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">工作空间管理</h2>
-        <div className="flex flex-col gap-2">
-          
-          <Button variant="outline" size="sm" className="text-purple-200 border-purple-300/30 hover:bg-purple-500/20 flex items-center justify-center h-10 w-10 p-0">
-            <Shuffle className="w-4 h-4" />
+        <div>
+          <h2 className="text-3xl font-bold text-violet-800">工作空间管理</h2>
+          <p className="text-gray-600 text-lg mt-2">管理和配置您的工作空间</p>
+        </div>
+        <div className="flex gap-3">
+          <Button variant="outline" size="lg" className="text-violet-600 border-violet-200 hover:bg-violet-50 font-medium">
+            <Shuffle className="w-5 h-5 mr-2" />
+            切换空间
+          </Button>
+          <Button size="lg" className="bg-violet-600 hover:bg-violet-700 text-white font-medium">
+            <Plus className="w-5 h-5 mr-2" />
+            新建空间
           </Button>
         </div>
       </div>
 
       {/* 工作空间卡片网格 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* 当前工作空间卡片 */}
-        <Card className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 relative group hover:bg-white/15 transition-all duration-300 cursor-pointer">
-          <div className="absolute top-3 right-3">
-            <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+        <Card className="bg-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl p-6 border border-violet-100 relative group">
+          <div className="absolute top-4 right-4">
+            <Badge className="bg-violet-100 text-violet-700 border-violet-200 font-medium">
               当前空间
             </Badge>
           </div>
           
           {/* 悬停蒙版 */}
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-end pr-6">
-            <div className="flex flex-col gap-2">
-              <Button variant="outline" size="sm" className="text-white border-white/30 hover:bg-white/20">
+          <div className="absolute inset-0 bg-white/90 backdrop-blur-sm rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center justify-center">
+            <div className="flex gap-3">
+              <Button variant="outline" className="text-violet-700 border-violet-300 hover:bg-violet-50 font-medium">
                 进入空间
               </Button>
-              <Button variant="outline" size="sm" className="text-red-400 border-red-400/30 hover:bg-red-500/20">
+              <Button variant="outline" className="text-red-600 border-red-200 hover:bg-red-50 font-medium">
                 删除空间
               </Button>
             </div>
           </div>
           
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-4 mb-4">
             <div className={`w-3 h-3 rounded-full ${getStatusColor(workspaceStatus.isRunning)} animate-pulse`} />
-            <h3 className="text-lg font-semibold text-white">
-              {currentWorkspace?.name || "空白工作空间"}
+            <h3 className="text-xl font-semibold text-violet-800">
+              {currentWorkspace?.name || "默认工作空间"}
             </h3>
-            <Badge className={`${workspaceStatus.isRunning ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'} text-xs`}>
-              {workspaceStatus.isRunning ? '运行中' : '已停止'}
-            </Badge>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 mb-4">
-            {/* CPU 使用率 */}
-            <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-              <div className="flex items-center gap-2 mb-2">
-                <Cpu className="w-4 h-4 text-blue-400" />
-                <span className="text-xs text-gray-300">CPU</span>
-              </div>
-              <div className="text-lg font-bold text-white mb-1">
-                {workspaceStatus.cpuUsage}%
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-1.5">
-                <div className="bg-blue-500 h-1.5 rounded-full transition-all duration-300" style={{
-                width: `${workspaceStatus.cpuUsage}%`
-              }} />
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600">运行时间</span>
+              <span className="text-violet-700 font-medium">{workspaceStatus.uptime}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600">CPU 使用率</span>
+              <div className="flex items-center gap-2">
+                <div className="w-24 h-2 bg-violet-100 rounded-full">
+                  <div 
+                    className="h-2 bg-violet-600 rounded-full"
+                    style={{ width: `${workspaceStatus.cpuUsage}%` }}
+                  />
+                </div>
+                <span className="text-violet-700 font-medium">{workspaceStatus.cpuUsage}%</span>
               </div>
             </div>
-
-            {/* 内存使用率 */}
-            <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-              <div className="flex items-center gap-2 mb-2">
-                <Zap className="w-4 h-4 text-purple-400" />
-                <span className="text-xs text-gray-300">内存</span>
-              </div>
-              <div className="text-lg font-bold text-white mb-1">
-                {workspaceStatus.memoryUsage}%
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-1.5">
-                <div className="bg-purple-500 h-1.5 rounded-full transition-all duration-300" style={{
-                width: `${workspaceStatus.memoryUsage}%`
-              }} />
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600">内存使用率</span>
+              <div className="flex items-center gap-2">
+                <div className="w-24 h-2 bg-violet-100 rounded-full">
+                  <div 
+                    className="h-2 bg-violet-600 rounded-full"
+                    style={{ width: `${workspaceStatus.memoryUsage}%` }}
+                  />
+                </div>
+                <span className="text-violet-700 font-medium">{workspaceStatus.memoryUsage}%</span>
               </div>
             </div>
           </div>
 
-          {/* VSCode和SSH状态 */}
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-xs text-gray-300">VSCode</span>
-              <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">已连接</Badge>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-xs text-gray-300">SSH</span>
-              <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">活跃</Badge>
-            </div>
-          </div>
-        </Card>
-
-        {/* 其他工作空间卡片 */}
-        <Card className="bg-white/10 backdrop-blur-xl rounded-2xl p-4 border border-white/20 relative group hover:bg-white/15 transition-all duration-300 cursor-pointer">
-          {/* 悬停蒙版 */}
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-end pr-6">
-            <div className="flex flex-col gap-2">
-              <Button variant="outline" size="sm" className="text-white border-white/30 hover:bg-white/20">
-                进入空间
-              </Button>
-              <Button variant="outline" size="sm" className="text-red-400 border-red-400/30 hover:bg-red-500/20">
-                删除空间
-              </Button>
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-3 h-3 rounded-full bg-gray-500" />
-            <h3 className="text-lg font-semibold text-white">
-              数据分析空间
-            </h3>
-            <Badge className="bg-gray-500/20 text-gray-400 border-gray-500/30 text-xs">
-              已停止
-            </Badge>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3 mb-4">
-            {/* CPU 使用率 */}
-            <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-              <div className="flex items-center gap-2 mb-2">
-                <Cpu className="w-4 h-4 text-gray-400" />
-                <span className="text-xs text-gray-300">CPU</span>
+          <div className="mt-6 pt-4 border-t border-violet-100">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <span className="text-gray-600">活跃用户</span>
+                <Badge className="bg-green-100 text-green-700 border-green-200">
+                  {workspaceStatus.activeUsers} 在线
+                </Badge>
               </div>
-              <div className="text-lg font-bold text-gray-400 mb-1">
-                0%
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-1.5">
-                <div className="bg-gray-500 h-1.5 rounded-full" style={{
-                width: '0%'
-              }} />
-              </div>
-            </div>
-
-            {/* 内存使用率 */}
-            <div className="bg-white/5 rounded-lg p-3 border border-white/10">
-              <div className="flex items-center gap-2 mb-2">
-                <Zap className="w-4 h-4 text-gray-400" />
-                <span className="text-xs text-gray-300">内存</span>
-              </div>
-              <div className="text-lg font-bold text-gray-400 mb-1">
-                0%
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-1.5">
-                <div className="bg-gray-500 h-1.5 rounded-full" style={{
-                width: '0%'
-              }} />
-              </div>
-            </div>
-          </div>
-
-          {/* VSCode和SSH状态 */}
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-gray-500" />
-              <span className="text-xs text-gray-300">VSCode</span>
-              <Badge className="bg-gray-500/20 text-gray-400 border-gray-500/30 text-xs">未连接</Badge>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-gray-500" />
-              <span className="text-xs text-gray-300">SSH</span>
-              <Badge className="bg-gray-500/20 text-gray-400 border-gray-500/30 text-xs">离线</Badge>
+              <span className="text-sm text-gray-500">最后活动：{workspaceStatus.lastActivity}</span>
             </div>
           </div>
         </Card>
       </div>
-
-      {/* 详细统计信息 */}
-      
-
-      {/* 功能模块快速访问 */}
-      <Card className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20">
-        <h3 className="text-lg font-semibold text-white mb-4">组件</h3>
-        <WorkspaceIconGrid onIconClick={onNavigate || (() => {})} />
-      </Card>
-
-      {/* 快速操作 */}
-      
     </div>;
 };

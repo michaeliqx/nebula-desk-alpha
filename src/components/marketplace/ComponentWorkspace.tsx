@@ -348,14 +348,14 @@ export const ComponentWorkspace = ({
   const getStatusColor = (status: WorkspaceComponent["status"]) => {
     switch (status) {
       case "running":
-        return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+        return "bg-violet-200 text-violet-600 border-violet-300";
       case "error":
-        return "bg-red-500/20 text-red-400 border-red-500/30";
+        return "bg-red-100 text-red-400 border-red-200";
       default:
-        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+        return "bg-gray-100 text-gray-400 border-gray-200";
     }
   };
-  return <div className="h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  return <div className="h-full bg-white backdrop-blur supports-[backdrop-filter]:bg-white/90">
       {/* Component Palette */}
       <div className="absolute top-4 left-4 z-10">
         
@@ -368,7 +368,7 @@ export const ComponentWorkspace = ({
 
       {/* Canvas */}
       <div ref={canvasRef} className="relative w-full h-full overflow-hidden" style={{
-      backgroundImage: `radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)`,
+      backgroundImage: `radial-gradient(circle at 1px 1px, #ede9fe 1px, transparent 0)`,
       backgroundSize: "20px 20px"
     }}>
         {/* Connections */}
@@ -388,14 +388,14 @@ export const ComponentWorkspace = ({
       }}>
             {component.type === "resource-monitor" && component.size === "1x4" && isEditMode ? <div className="w-64 h-32">
                 <ResourceMonitorChart data={resourceData} />
-              </div> : <Card className={`${getComponentSize(component.size)} bg-white/10 backdrop-blur-xl border border-white/20 hover:border-blue-500/50 transition-all duration-300 flex flex-col items-center justify-center p-2 cursor-pointer ${selectedComponent === component.id ? 'border-blue-500 ring-2 ring-blue-500' : ''}`} onClick={() => {
+              </div> : <Card className={`${getComponentSize(component.size)} bg-violet-50/80 backdrop-blur-xl border border-violet-200 hover:border-violet-400 transition-all duration-300 flex flex-col items-center justify-center p-2 cursor-pointer ${selectedComponent === component.id ? 'border-violet-500 ring-2 ring-violet-400' : ''}`} onClick={() => {
           handleSelect(component.id);
           if (component.type === "resource-monitor" && isEditMode) {
             toggleComponentSize(component.id);
           }
         }}>
                 <div className="mb-1">{component.icon}</div>
-                <h3 className="text-white text-xs font-medium text-center leading-tight mb-1">
+                <h3 className="text-violet-700 text-xs font-medium text-center leading-tight mb-1">
                   {component.name}
                 </h3>
                 <Badge className={`text-[10px] ${getStatusColor(component.status)}`}>

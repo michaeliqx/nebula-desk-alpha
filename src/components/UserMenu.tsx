@@ -83,7 +83,7 @@ export const UserMenu = () => {
       <Button 
         onClick={handleLogin}
         variant="outline" 
-        className="border-white/20 text-white hover:bg-white/10"
+        className="bg-violet-100 text-violet-700 hover:bg-violet-200 border-violet-200"
       >
         <LogIn className="w-4 h-4 mr-2" />
         登录

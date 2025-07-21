@@ -195,14 +195,14 @@ if __name__ == "__main__":
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <Card className="w-[800px] h-[600px] bg-card/95 backdrop-blur-xl border border-border/50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20">
+      <Card className="w-[800px] h-[600px] bg-white/95 backdrop-blur-xl border border-violet-200">
         {/* 窗口标题栏 */}
-        <div className="flex items-center justify-between p-3 border-b border-border/50 bg-muted/20">
+        <div className="flex items-center justify-between p-3 border-b border-violet-200 bg-violet-50">
           <div className="flex items-center gap-2">
             {getIcon()}
-            <span className="font-medium">{componentName}</span>
-            <Badge variant="outline" className="text-xs">
+            <span className="font-medium text-violet-700">{componentName}</span>
+            <Badge variant="outline" className="text-xs text-violet-600 border-violet-300">
               {componentType}
             </Badge>
           </div>

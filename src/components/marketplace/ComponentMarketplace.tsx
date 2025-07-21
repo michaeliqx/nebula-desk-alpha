@@ -444,23 +444,23 @@ export const ComponentMarketplace = () => {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6 bg-white rounded-lg">
       <div className="flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-white">组件市场</h2>
-          <p className="text-gray-400">发现、安装和管理开发组件</p>
+          <h2 className="text-3xl font-bold text-violet-800">组件市场</h2>
+          <p className="text-gray-600 text-lg">发现、安装和管理开发组件</p>
         </div>
         <div className="flex gap-2">
           <Dialog open={isAIGenerateDialogOpen} onOpenChange={setIsAIGenerateDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/30">
+              <Button className="bg-violet-100 hover:bg-violet-200 text-violet-700 border border-violet-300 font-medium px-4 py-2">
                 🤖 AI生成组件
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-gray-900/90 backdrop-blur-xl border border-white/10">
+            <DialogContent className="bg-white backdrop-blur-xl border border-violet-200">
               <DialogHeader>
-                <DialogTitle className="text-white">AI生成组件</DialogTitle>
-                <DialogDescription className="text-gray-400">
+                <DialogTitle className="text-violet-700">AI生成组件</DialogTitle>
+                <DialogDescription className="text-gray-600">
                   描述您需要的组件功能，AI将为您生成相应的组件
                 </DialogDescription>
               </DialogHeader>
@@ -469,7 +469,7 @@ export const ComponentMarketplace = () => {
                   placeholder="例如：创建一个数据可视化组件，支持图表展示和数据导出..."
                   value={aiPrompt}
                   onChange={(e) => setAiPrompt(e.target.value)}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-violet-50 border-violet-200 text-violet-900"
                   rows={4}
                 />
               </div>
@@ -477,7 +477,7 @@ export const ComponentMarketplace = () => {
                 <Button variant="outline" onClick={() => setIsAIGenerateDialogOpen(false)}>
                   取消
                 </Button>
-                <Button onClick={handleAIGenerate} className="bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/30">
+                <Button onClick={handleAIGenerate} className="bg-violet-600 hover:bg-violet-700 text-white font-medium px-6">
                   生成组件
                 </Button>
               </DialogFooter>
@@ -486,14 +486,14 @@ export const ComponentMarketplace = () => {
 
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/30">
+              <Button className="bg-violet-100 hover:bg-violet-200 text-violet-700 border border-violet-300 font-medium px-4 py-2">
                 ➕ 新建组件
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-gray-900/90 backdrop-blur-xl border border-white/10">
+            <DialogContent className="bg-white backdrop-blur-xl border border-violet-200">
               <DialogHeader>
-                <DialogTitle className="text-white">创建自定义组件</DialogTitle>
-                <DialogDescription className="text-gray-400">
+                <DialogTitle className="text-violet-700">创建自定义组件</DialogTitle>
+                <DialogDescription className="text-gray-600">
                   填写组件信息来创建您的自定义组件
                 </DialogDescription>
               </DialogHeader>
@@ -502,13 +502,13 @@ export const ComponentMarketplace = () => {
                   placeholder="组件名称"
                   value={newComponent.name}
                   onChange={(e) => setNewComponent(prev => ({ ...prev, name: e.target.value }))}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-violet-50 border-violet-200 text-violet-900"
                 />
                 <Textarea
                   placeholder="组件描述"
                   value={newComponent.description}
                   onChange={(e) => setNewComponent(prev => ({ ...prev, description: e.target.value }))}
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-violet-50 border-violet-200 text-violet-900"
                 />
                 <Select value={newComponent.category} onValueChange={(value) => setNewComponent(prev => ({ ...prev, category: value }))}>
                   <SelectTrigger className="bg-white/5 border-white/10 text-white">
@@ -564,7 +564,7 @@ export const ComponentMarketplace = () => {
                 <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
                   取消
                 </Button>
-                <Button onClick={handleCreateComponent} className="bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/30">
+                <Button onClick={handleCreateComponent} className="bg-violet-600 hover:bg-violet-700 text-white font-medium px-6">
                   创建组件
                 </Button>
               </DialogFooter>
@@ -573,73 +573,57 @@ export const ComponentMarketplace = () => {
         </div>
       </div>
 
-      {/* 搜索和筛选 */}
-      <div className="flex gap-4">
+      {/* 搜索栏和分类 */}
+      <div className="flex flex-col md:flex-row gap-4 items-center">
         <Input
           placeholder="搜索组件..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="flex-1 bg-white/5 border-white/10 text-white"
+          onChange={e => setSearchQuery(e.target.value)}
+          className="bg-violet-50 border-violet-200 text-violet-900 max-w-xs"
         />
-        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-          <SelectTrigger className="w-48 bg-white/5 border-white/10 text-white">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
+        <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full md:w-auto">
+          <TabsList className="bg-violet-50 border border-violet-200">
             {categories.map(category => (
-              <SelectItem key={category} value={category}>
-                {category === "all" ? "全部分类" : category}
-              </SelectItem>
+              <TabsTrigger key={category} value={category} className="text-violet-700 data-[state=active]:bg-violet-200 data-[state=active]:text-violet-900">
+                {category}
+              </TabsTrigger>
             ))}
-          </SelectContent>
-        </Select>
+          </TabsList>
+        </Tabs>
       </div>
 
-      <Tabs defaultValue="all" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-white/5">
-          <TabsTrigger value="all" className="data-[state=active]:bg-blue-500/20 text-white">全部</TabsTrigger>
-          <TabsTrigger value="official" className="data-[state=active]:bg-blue-500/20 text-white">官方组件</TabsTrigger>
-          <TabsTrigger value="community" className="data-[state=active]:bg-blue-500/20 text-white">社区组件</TabsTrigger>
-          <TabsTrigger value="installed" className="data-[state=active]:bg-blue-500/20 text-white">已安装</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="all" className="mt-6" ref={dragCanvasRef}>
-          <div className="space-y-4">
-            {/* 应用组 */}
-            {componentGroups.length > 0 && (
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-4">自定义应用组</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                  {componentGroups.map(renderComponentGroup)}
-                </div>
+      {/* 组件列表 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredComponents.map(component => (
+          <Card key={component.id} className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-200 rounded-xl p-6 border border-violet-100">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-violet-50 rounded-xl flex items-center justify-center">
+                {component.icon}
               </div>
-            )}
-            
-            {/* 未分组的组件 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {getUngroupedComponents().map(renderComponentCard)}
+              <div>
+                <h3 className="text-xl font-semibold text-violet-800 mb-1">{component.name}</h3>
+                <p className="text-gray-600 text-sm line-clamp-2">{component.description}</p>
+              </div>
             </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="official" className="mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {getUngroupedComponents().filter(c => c.type === "official").map(renderComponentCard)}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="community" className="mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {getUngroupedComponents().filter(c => c.type === "community" || c.type === "custom").map(renderComponentCard)}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="installed" className="mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {getUngroupedComponents().filter(c => c.isInstalled).map(renderComponentCard)}
-          </div>
-        </TabsContent>
-      </Tabs>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {component.tags.map(tag => (
+                <Badge key={tag} className="bg-violet-100 text-violet-700 border-violet-200 text-xs font-medium">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+            <div className="flex items-center justify-between mt-2">
+              <div className="flex gap-2 items-center text-gray-500 text-sm">
+                <span>下载量: <span className="text-violet-700 font-medium">{component.downloads}</span></span>
+                <span>评分: <span className="text-violet-700 font-medium">{component.rating}</span></span>
+              </div>
+              <Button size="sm" className="bg-violet-600 hover:bg-violet-700 text-white font-medium px-4">
+                {component.isInstalled ? '已安装' : '安装'}
+              </Button>
+            </div>
+          </Card>
+        ))}
+      </div>
 
       {filteredComponents.length === 0 && (
         <div className="text-center py-12">
